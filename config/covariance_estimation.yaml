@@ -1,0 +1,16 @@
+#Topics to be subscribed to:
+odom_with_no_covariance_topic: encoder_odometry
+odom_with_covariance_topic: gps_odometry
+
+#Topic to be published:
+odom_with_calculated_cov_topic: encoder_odometry_with_covariance
+
+#Indicate the states that needs the covariance estimation from [X, Y, Z, ROLL, PITCH, YAW]
+states_config: [true, true, false, false, false, true]
+
+#size of innovation memory matrix 
+size_of_Xi: 10
+cov_confidence_factor: 0.5
+Mahalanobis_threshold: 25
+standard_deviation_correlation_constant_distance: 0.1
+

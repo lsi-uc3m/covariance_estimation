@@ -1,0 +1,7 @@
+<launch>
+
+<node pkg="covariance_estimation" type="covariance_estimation" name="covariance_estimation" output="screen">
+<rosparam command="load" file="$(find covariance_estimation)/config/params.yaml" />
+</node>
+
+</launch>
