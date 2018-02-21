@@ -220,7 +220,7 @@
 
       for(int i = 0; i < numberOfStates; i++)
       {
-        if(isnan(distanceDependentScaleFactors(i)))
+        if(std::isnan(distanceDependentScaleFactors(i)))
           distanceDependentScaleFactors(i) = 1e-9;
       }
       //std::cout << distanceDependentScaleFactors << std::endl << std::endl;
