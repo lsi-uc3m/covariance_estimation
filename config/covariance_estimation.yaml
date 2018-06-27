@@ -1,16 +1,49 @@
-#Topics to be subscribed to:
-odom_with_no_covariance_topic: encoder_odometry
-odom_with_covariance_topic: gps_odometry
+# **********subscribed topics**********
 
-#Topic to be published:
-odom_with_calculated_cov_topic: encoder_odometry_with_covariance
+# proprioceptive sensor odometry with unknown covariance
+odom_with_no_covariance_topic: odom1
 
-#Indicate the states that needs the covariance estimation from [X, Y, Z, ROLL, PITCH, YAW]
-states_config: [true, true, false, false, false, true]
+# exteroceptive sensor odometry with known covariance
+odom_with_covariance_topic: odom2
 
-#size of innovation memory matrix 
-size_of_Xi: 10
+# **********published topics**********
+
+# proprioceptive sensor odometry with estimated covariance
+odom_with_calculated_cov_topic: odom1_with_covariance
+
+# **********configuration parameters**********
+
+# indicate the odometry states that the proprioceptive sensor odometry contain
+# for the covariance estimation from [X, Y, Z, ROLL, PITCH, YAW].
+# Note that the exteroceptive sensor odometry used in the covariance estimation
+# will have to contain the same states in order for the estimation algorithm to work properly.
+states_config: [true, true, true, true, true, true]
+
+# size of innovation memory matrix which stores the sigma points innovations
+# in order to use them in estimating the proprioceptive sensor scale factor.
+# This value is chosen based on the user preference depending on the proprioceptive sensor.
+# The more the size of the memory matrix, the more sluggish is the covariance estimation,
+# which means it doesn’t change rapidly, and the less the memory matrix, the less sluggish is the
+# covariance estimation, which means it changes rapidly with the readings of the sensor.
+size_of_Xi: 100
+
+# covariance confidence factor is a scaling constant which depends on the accuracy of the used
+# exteroceptive sensor, along with the accuracy of the exteroceptive sensor covariance matrix.
 cov_confidence_factor: 0.5
-Mahalanobis_threshold: 25
-standard_deviation_correlation_constant_distance: 0.1
 
+# Mahalanobis distance threshold is for the exteroceptive sensor outliers elemination
+Mahalanobis_threshold: 1000
+
+# standard deviation correlation constant correlates the scale factor of the proprioceptive sensor
+# to the standard deviation of the proprioceptive sensor deterministic error, which is assumed to
+# be random. The choice of this parameter depends on the proprioceptive sensor, which needs the
+# estimation and specially on the frequency of the sensor as well as the amount of drift that the
+# sensor suffers.
+# High drift -> High values
+# Low drift -> Low values
+# High frequency -> Low values
+# Low frequency -> High values
+# The choice of the parameter is based on the user preference, which qualitatively assess the
+# proprioceptive sensor at hand and based on it tune the value of the standard deviation
+# correlation constant.
+standard_deviation_correlation_constant_distance: 100
