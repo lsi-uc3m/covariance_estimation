@@ -1,4 +1,4 @@
-# Covariance Estimation Package
+# DCE: Online Drift Covariance Estimation
 
 ### Package Summary ###
 
